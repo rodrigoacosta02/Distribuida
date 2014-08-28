@@ -1,5 +1,5 @@
 
-package computacaodistribuida;
+package Cliente;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -15,13 +15,8 @@ public class Cliente {
         
         int tll = 1;
         
-        MulticastSocket s = new MulticastSocket();
-        
-        
-        
-     
-        
-
+        MulticastSocket s = new MulticastSocket(port);
+        s.joinGroup(InetAddress.getByName(group));
         DatagramPacket p;
         String s1="ola";
         byte buffer[] = s1.getBytes();
@@ -31,8 +26,14 @@ public class Cliente {
         
         
         s.send(p);
+        System.out.println("Esperando mensagem ");
+        while(true){
+        	s.receive(p);
+        	System.out.println("nome: "+p.getAddress()+"Dado: "+new String(p.getData()));
+        }
         
-        s.close();
+        
+        
                 
     }
 }

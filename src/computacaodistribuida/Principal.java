@@ -15,11 +15,15 @@ public class Principal {
 		//entrar num grupo
 		m.joinGroup(InetAddress.getByName(grupo));
 		//receber dados
-		byte dado[]=new byte[4];
+		byte dado[]=new byte[1024];
 		
-		DatagramPacket p= new DatagramPacket(dado, 4);		
+		DatagramPacket p= new DatagramPacket(dado, dado.length);
+		
 		m.receive(p);		
-		System.out.println(p.getLength());
+		System.out.println(p.getLength()+" nome: "+p.getAddress() +" dado: "+p.getData());
+		m.leaveGroup(InetAddress.getByName(grupo));
+		m.close();
+		
 
 	}
 

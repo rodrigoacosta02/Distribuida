@@ -5,7 +5,7 @@ import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
 
-public class Principal {
+public class ServidorMultiCast {
 
 	public static void main(String[] args) throws IOException {
 		int port = 1234;
@@ -19,8 +19,10 @@ public class Principal {
 		
 		DatagramPacket p= new DatagramPacket(dado, dado.length);
 		
-		m.receive(p);		
-		System.out.println(p.getLength()+" nome: "+p.getAddress() +" dado: "+p.getData());
+		m.receive(p);
+		
+		
+		System.out.println(p.getLength()+" nome: "+p.getAddress() +" dado: "+new String(p.getData()));
 		m.leaveGroup(InetAddress.getByName(grupo));
 		m.close();
 		

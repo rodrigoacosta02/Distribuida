@@ -18,13 +18,15 @@ public class Cliente {
         MulticastSocket s = new MulticastSocket();
         
         
-        byte buffer[] = new byte[10];
+        
      
-        for (int i=0; i<buffer.length; i++) 
-            
-            buffer[i] = (byte)i;
+        
 
         DatagramPacket p;
+        String s1="ola";
+        byte buffer[] = s1.getBytes();
+        
+        
         p = new DatagramPacket(buffer, buffer.length, InetAddress.getByName(group), port);
         
         

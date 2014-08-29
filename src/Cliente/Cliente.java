@@ -65,6 +65,7 @@ public class Cliente{
 				exception.printStackTrace();
 			}
 			c.exibirLista();
+			
 		}
 	}
 

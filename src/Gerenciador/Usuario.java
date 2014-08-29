@@ -7,11 +7,12 @@ public class Usuario {
 	String nome;
 	String ip;
 	int porta;
-	int tempo = 0;
+	int tempo;
 	public Usuario(String hostName, String hostAddress, int port) {
 		nome = hostName;
 		ip = hostAddress;
 		porta = port;
+		tempo = 0;
 		contarTempo();
 	}
 	public String getNome() {
@@ -46,7 +47,7 @@ public class Usuario {
 			@Override
 			public void run() {
 				tempo++;
-				System.out.println(tempo);
+				//System.out.println(tempo+"\t" + nome);
 				
 			}
 		};

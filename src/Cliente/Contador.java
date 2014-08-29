@@ -3,6 +3,7 @@ package Cliente;
 import java.awt.List;
 import java.net.InetAddress;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -11,9 +12,9 @@ import Gerenciador.Usuario;
 public class Contador {
 	
 	
-	private ArrayList<Usuario> participantes;
+	private LinkedList<Usuario> participantes;
 	public Contador(){
-		participantes = new ArrayList<Usuario>();
+		participantes = new LinkedList<Usuario>();
 	}
 	public void atualizarLista(){
 		Timer t = new Timer();
@@ -37,14 +38,15 @@ public class Contador {
 	}
 	public void exibirLista(){
 		for (Usuario us : participantes) {
-			System.out.println("\n "+us.getNome());
+			System.out.println("\n "+us.getNome()+"\n tempo "+ us.getTempo());
 		}
 	}
 	public void add(InetAddress address, int port){
 		Timer t = new Timer();
 		final int pos = userExistente(address);
 		if(pos == -1){
-			participantes.add(new Usuario(address.getHostName(),address.getHostAddress(),port));
+			Usuario u = new Usuario(address.getHostName(),address.getHostAddress(),port);
+			participantes.add(u);
 			
 		}else{
 			participantes.get(pos).zerarTempo();
@@ -78,7 +80,7 @@ public class Contador {
 	}
 	public void verificarTempo() {
 		for (Usuario us : participantes) {
-			if(us.getTempo() > 60){
+			if(us.getTempo() > 10){
 				participantes.remove(us);
 			}
 		}

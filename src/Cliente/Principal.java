@@ -10,8 +10,8 @@ public class Principal {
     public static void main(String[] args) throws IOException {
 
         Cliente app = new Cliente("Rodrigo");
-
-        app.addWindowListener(
+        Window win = new Window(app);
+        win.addWindowListener(
            new WindowAdapter() {
               public void windowClosing( WindowEvent e )
               {
@@ -20,7 +20,7 @@ public class Principal {
            }
         );
 
-        app.waitForPackets();
+        app.waitForPackets(win);
         
                 
     }

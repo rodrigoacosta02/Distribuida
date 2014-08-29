@@ -69,7 +69,6 @@ public class Cliente{
 
 	public synchronized void envio(ActionEvent e) {
 		try {
-
 			String texto = "MSG "+this.nome;
 
 			String msg = e.getActionCommand();
@@ -83,25 +82,6 @@ public class Cliente{
 			exception.printStackTrace();
 		}
 	}
-	public void receberMsgAutomatica(){
-		Contador c = new Contador();
-		while(true){
-			byte data[] = new byte[100];
-			DatagramPacket msgAut = new DatagramPacket(data, data.length);
-			try {
-				System.out.println("adiconar user");
-				socket.receive(msgAut);
-				c.adicionarParticipante(msgAut.getAddress(),msgAut.getPort());
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
-
-
-
-	}
 	public void msgAutomatica(){
 		try {
 			String s =  "ONLINE "+nome+ "@";
@@ -113,15 +93,12 @@ public class Cliente{
 		} catch (IOException exception) {
 			exception.printStackTrace();
 		}
-
 	}
 	public void enviarMensagem(){
 		TimerTask tt = new TimerTask() {
-
 			@Override
 			public void run() {
 				msgAutomatica();
-
 			}
 		};
 		Timer tempo = new Timer();
@@ -138,17 +115,6 @@ public class Cliente{
 		@Override
 		public void run() {
 			enviarMensagem();
-			receberMsgAutomatica();
-
 		}
-	}
-	public class RecebimentoMensagem implements Runnable{
-
-		@Override
-		public void run() {
-			receberMsgAutomatica();
-
-		}
-
 	}
 }

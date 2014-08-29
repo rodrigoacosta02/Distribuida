@@ -33,23 +33,18 @@ public class Contador {
 				participantes.add(new Usuario(address.getHostName(),address.getHostAddress(),port));
 			}
 		}
-		
 	}
 	public void exibirLista(){
 		for (Usuario us : participantes) {
 			System.out.println("\n "+us.getNome());
-			
 		}
 	}
 	public void add(InetAddress address, int port){
 		if(!userExistente(address)){
-			
-		
 			participantes.add(new Usuario(address.getHostName(),address.getHostAddress(),port));
 		}
 	}
 	public boolean userExistente(InetAddress add){
-		
 		for(Usuario us : participantes){
 			if(us.getIp().equals(add.getHostAddress())){		
 				return true;

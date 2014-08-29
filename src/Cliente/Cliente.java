@@ -48,11 +48,9 @@ public class Cliente{
 				//MOSTRAR NOME DE QUEM ENVIOU O PACOTE
 				String nome = new String(receivePacket.getData(), 0, receivePacket.getLength());
 				String[] pacote= nome.split("@",2);                
-				/*String msg= "\n <ONLINE>" +  pacote[0]+ ":" + receivePacket.getAddress() + ":" 
-						+ receivePacket.getPort() + "\n"
-						+ pacote[1];*/
-				System.out.println(new String(receivePacket.getData()));
-				window.recebimentoPacotes(nome);
+				String msg= "\n <ONLINE>" +  pacote[0]+ ":" + receivePacket.getAddress() + ":" 
+                                + receivePacket.getPort() + "\n" + pacote[1];
+				window.recebimentoPacotes(msg);
 			} catch (IOException exception) {
 				exception.printStackTrace();
 			}
@@ -75,10 +73,9 @@ public class Cliente{
 			exception.printStackTrace();
 		}
 	}
-	public void msgAutomatica(String s){
+	public void msgAutomatica(){
 		try {
-
-			 
+			String s =  nome+ "@";
 			byte data[] = s.getBytes();
 			sendPacket = new DatagramPacket(data, data.length,
 					grupo, 1234);
@@ -96,11 +93,7 @@ public class Cliente{
 
 			@Override
 			public void run() {
-				System.out.println("run");
-				//String s = "\n <ONLINE>" +  nome+ ":" + sendPacket.getAddress() + ":" 
-					//	+ sendPacket.getPort() + "\n";
-				
-				msgAutomatica("nome");
+				msgAutomatica();
 
 			}
 		};

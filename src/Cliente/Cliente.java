@@ -58,6 +58,7 @@ public class Cliente{
 						+ receivePacket.getPort() + "\n" + pacote[1];
 					}
 				}
+				c.verificarTempo();
 				
 				window.recebimentoPacotes(msg);
 			} catch (IOException exception) {

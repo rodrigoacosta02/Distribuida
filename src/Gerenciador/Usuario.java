@@ -1,13 +1,18 @@
 package Gerenciador;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class Usuario {
 	String nome;
 	String ip;
 	int porta;
+	int tempo = 0;
 	public Usuario(String hostName, String hostAddress, int port) {
 		nome = hostName;
 		ip = hostAddress;
 		porta = port;
+		contarTempo();
 	}
 	public String getNome() {
 		return nome;
@@ -27,5 +32,27 @@ public class Usuario {
 	public void setPorta(int porta) {
 		this.porta = porta;
 	}
+	public void zerarTempo() {
+		tempo = 0;
+		
+	}
+	public int getTempo() {
+		// TODO Auto-generated method stub
+		return tempo;
+	}
+	public void contarTempo(){
+		TimerTask tt = new TimerTask() {
+			
+			@Override
+			public void run() {
+				tempo++;
+				System.out.println(tempo);
+				
+			}
+		};
+		Timer temp = new Timer();
+		temp.scheduleAtFixedRate(tt, 0, 1000);
+	}
+	
 	
 }

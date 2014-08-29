@@ -4,6 +4,7 @@ import java.awt.List;
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Timer;
+import java.util.TimerTask;
 
 import Gerenciador.Usuario;
 
@@ -40,16 +41,47 @@ public class Contador {
 		}
 	}
 	public void add(InetAddress address, int port){
-		if(!userExistente(address)){
+		Timer t = new Timer();
+		final int pos = userExistente(address);
+		if(pos == -1){
 			participantes.add(new Usuario(address.getHostName(),address.getHostAddress(),port));
+			
+		}else{
+			participantes.get(pos).zerarTempo();
 		}
+		
 	}
-	public boolean userExistente(InetAddress add){
+	public void tempo(){
+		
+	}
+	public int userExistente(InetAddress add){
+		int i = 0;
 		for(Usuario us : participantes){
 			if(us.getIp().equals(add.getHostAddress())){		
-				return true;
+				return i;
+			}
+			i++;
+		}
+		return -1;
+	}
+	public class TempoAtual implements Runnable{
+		int tempo = 0;
+		Timer t = new Timer();
+		@Override
+		public void run() {
+			// TODO Auto-generated method stub
+			
+			
+			
+		}
+		
+	}
+	public void verificarTempo() {
+		for (Usuario us : participantes) {
+			if(us.getTempo() > 60){
+				participantes.remove(us);
 			}
 		}
-		return false;
+		
 	}
 }

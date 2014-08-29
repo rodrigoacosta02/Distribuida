@@ -21,10 +21,10 @@ public class Principal {
               }
            }
         );
-        Thread envio = new Thread(app.new ExecucaoMensagem());
-        //app.enviarMensagem();
-        //app.waitForPackets(win);
-        app.receberMsgAutomatica();
+        //Thread envio = new Thread(app.new ExecucaoMensagem());
+        app.enviarMensagem();
+        app.waitForPackets(win);
+       // app.receberMsgAutomatica();
         
         
         

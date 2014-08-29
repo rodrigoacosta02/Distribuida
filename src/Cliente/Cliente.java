@@ -38,20 +38,19 @@ public class Cliente{
 		Contador c = new Contador();
 		while (true) {
 			try {
-				// set up packet
 				byte data[] = new byte[100];
 				String msg = new String();
 				receivePacket = new DatagramPacket(data, data.length);
-				// wait for packet
-				socket.receive(receivePacket);
 
-				// process packet
-				//                janela.recebimentoPacotes(nome, receivePacket);
-				//MOSTRAR NOME DE QUEM ENVIOU O PACOTE
+				socket.receive(receivePacket);
+				
 				String nome = new String(receivePacket.getData(), 0, receivePacket.getLength());
+				
 				String[] pacote= nome.split(" ",2);
+				
 				if(pacote[0].equals("ONLINE")){
-					c.adicionarParticipante(receivePacket.getAddress(), receivePacket.getPort());
+					System.out.println("online");
+					c.add(receivePacket.getAddress(), receivePacket.getPort());
 					
 				}else{
 					if(pacote[0].equals("MSG")){
@@ -64,13 +63,14 @@ public class Cliente{
 			} catch (IOException exception) {
 				exception.printStackTrace();
 			}
+			c.exibirLista();
 		}
 	}
 
 	public synchronized void envio(ActionEvent e) {
 		try {
 
-			String texto = this.nome;
+			String texto = "MSG "+this.nome;
 
 			String msg = e.getActionCommand();
 			texto = texto.concat("@"+msg); 
@@ -104,7 +104,7 @@ public class Cliente{
 	}
 	public void msgAutomatica(){
 		try {
-			String s =  nome+ "@";
+			String s =  "ONLINE "+nome+ "@";
 			byte data[] = s.getBytes();
 			sendPacket = new DatagramPacket(data, data.length,
 					grupo, 1234);			

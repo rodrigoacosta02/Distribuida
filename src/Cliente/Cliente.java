@@ -42,7 +42,13 @@ public class Cliente{
                 socket.receive(receivePacket);
 				// process packet
 //                janela.recebimentoPacotes(nome, receivePacket);
-                window.recebimentoPacotes(nome, receivePacket);
+                //MOSTRAR NOME DE QUEM ENVIOU O PACOTE
+                String nome = new String(receivePacket.getData(), 0, receivePacket.getLength());
+                String[] pacote= nome.split("@");                
+                String msg= "\n <ONLINE>" +  pacote[0]+ ":" + receivePacket.getAddress() + ":" 
+                + receivePacket.getPort() + "\n"
+                + pacote[1];
+                window.recebimentoPacotes(msg);
             } catch (IOException exception) {
                 exception.printStackTrace();
             }
@@ -52,8 +58,11 @@ public class Cliente{
     public synchronized void envio(ActionEvent e) {
         try {
 
-            String s = e.getActionCommand();
-            byte data[] = s.getBytes();
+            String texto = this.nome;
+            
+        	String msg = e.getActionCommand();
+        	texto = texto.concat("@"+msg); 
+            byte data[] = texto.getBytes();
             sendPacket = new DatagramPacket(data, data.length,
                     grupo, 1234);
             socket.send(sendPacket);

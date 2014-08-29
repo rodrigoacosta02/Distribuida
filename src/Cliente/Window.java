@@ -33,13 +33,12 @@ public class Window extends JFrame implements ActionListener {
         cliente.envio(ae);
     }
 
-    public void recebimentoPacotes(String nome, DatagramPacket receivePacket) {
-        System.out.println("entrou " + receivePacket.getPort());
+    public void recebimentoPacotes(String msg) {
+        
 
-        display.append("\n <ONLINE>" + nome + ":" + receivePacket.getAddress() + ":" + receivePacket.getPort() + "\n"
-                + new String(receivePacket.getData(), 0, receivePacket.getLength()));
+        display.append(msg);
         display.setCaretPosition(
                 display.getText().length());
-        System.out.println("saiu");
+        
     }
 }

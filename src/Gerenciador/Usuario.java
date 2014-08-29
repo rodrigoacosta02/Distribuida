@@ -4,6 +4,11 @@ public class Usuario {
 	String nome;
 	String ip;
 	int porta;
+	public Usuario(String hostName, String hostAddress, int port) {
+		nome = hostName;
+		ip = hostAddress;
+		porta = port;
+	}
 	public String getNome() {
 		return nome;
 	}

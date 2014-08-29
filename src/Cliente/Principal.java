@@ -5,6 +5,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
 
+import Cliente.Cliente.ExecucaoMensagem;
+
 public class Principal {
 
     public static void main(String[] args) throws IOException {
@@ -19,8 +21,13 @@ public class Principal {
               }
            }
         );
-
+        //Thread envio = new Thread(app.new ExecucaoMensagem());
+        app.enviarMensagem();
         app.waitForPackets(win);
+        
+        
+        
+        
         
                 
     }

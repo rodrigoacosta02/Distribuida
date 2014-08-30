@@ -8,18 +8,36 @@ import Gerenciador.Usuario;
 public class Contador {
 	
 	private LinkedList<Usuario> participantes;
-
+        private boolean novoParticipante;
         public Contador(){
 		participantes = new LinkedList<Usuario>();
 	}
-	
 
+        public LinkedList<Usuario> getParticipantes() {
+            return participantes;
+        }
+
+        public boolean isNovoParticipante() {
+            return novoParticipante;
+        }
+	
+        
 	public void exibirLista(){
 		for (Usuario us : participantes) {
 			System.out.println("\n "+us.getNome()+"\n tempo "+ us.getTempo());
 		}
 	}
-        
+        public String imprimirParticipantes(){
+            String usuarios = "\n########-- Usuarios ONLINE --##########\n";
+            for (Usuario usuario : participantes) {
+                usuarios = usuarios + "\nONLINE " + usuario.getNome()+ ":" 
+                                            + usuario.getIp() + ":"
+                                            + usuario.getPorta()
+                                            + "\n";
+                                    
+            }
+            return usuarios;
+        }
         /**
          *adiciona novos usuarios a lista de participantes 
          *ou zeraTempo() usuario jah existente 
@@ -33,9 +51,10 @@ public class Contador {
 		if(pos == -1){
 			Usuario u = new Usuario(nome,address.getHostAddress(),port);
 			participantes.add(u);
-			
+			novoParticipante = true;
 		}else{
 			participantes.get(pos).zerarTempo();
+                        novoParticipante = false;
 		}
 		
 	}

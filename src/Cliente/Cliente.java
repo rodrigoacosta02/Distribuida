@@ -35,10 +35,11 @@ public class Cliente{
         /**
          * recebe pacotes e os trata
          * 
-         * @param window 
+         * @param windowCliente 
+         * @param windowServer 
          */
-	public void waitForPackets(Window window) {
-		Contador c = new Contador();
+	public void waitForPackets(Window windowCliente, Window windowServer) {
+		Contador contador = new Contador();
 		while (true) {
 			try {
 				byte data[] = new byte[100];
@@ -54,7 +55,9 @@ public class Cliente{
                             switch (pacote[0]) {
                                 case "ONLINE":
                                     //pacote[1] contem nome do usuario
-                                    c.adicionarParticipante(pacote[1], receivePacket.getAddress(), receivePacket.getPort());
+                                    contador.adicionarParticipante(pacote[1], receivePacket.getAddress(), receivePacket.getPort());
+                                    if(contador.isNovoParticipante())
+                                        windowServer.recebimentoPacotes(contador.imprimirParticipantes());
                                     break;
                                 case "MSG":
                                     pacote = nome.split("@", 2);
@@ -68,13 +71,13 @@ public class Cliente{
                                 case "OK":
                                     break;
                             }
-				c.verificarTempo();
+				contador.verificarTempo();
 				
-				window.recebimentoPacotes(msg);
+				windowCliente.recebimentoPacotes(msg);
 			} catch (IOException exception) {
 				exception.printStackTrace();
 			}
-			c.exibirLista();
+			contador.exibirLista();
 		}
 	}
 

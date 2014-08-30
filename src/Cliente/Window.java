@@ -1,6 +1,7 @@
 package Cliente;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFrame;
@@ -25,20 +26,38 @@ public class Window extends JFrame implements ActionListener {
         setSize(400, 300);
         setLocationRelativeTo(null);
         setVisible(true);
-
     }
-
+    public Window(String s, Cliente cli) {
+        cliente = cli;
+        enter = new JTextField(s);
+        enter.setEditable(false);
+        getContentPane().add(enter, BorderLayout.NORTH);
+        display = new JTextArea();
+        getContentPane().add(new JScrollPane(display),
+                BorderLayout.CENTER);
+        setSize(400, 300);
+        setLocationRelativeTo(null);
+        setVisible(true);
+    }
+    
+    /**
+     * envia msg de usuario
+     * 
+     * @param ae 
+     */
     @Override
     public void actionPerformed(ActionEvent ae) {
         cliente.envio(ae);
     }
-
+    
+    /**
+     * recebe msg e mostra na tela
+     * 
+     * @param msg 
+     */
     public void recebimentoPacotes(String msg) {
-        
-
         display.append(msg);
         display.setCaretPosition(
                 display.getText().length());
-        
     }
 }

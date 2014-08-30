@@ -10,9 +10,9 @@ public class Principal {
 
     public static void main(String[] args) throws IOException {
 
-        Cliente app = new Cliente("Rodrigo");
-        Window win = new Window(app);
-        win.addWindowListener(
+        Cliente app = new Cliente("Rod");
+        Window windowCliente = new Window(app);
+        windowCliente.addWindowListener(
            new WindowAdapter() {
               public void windowClosing( WindowEvent e )
               {
@@ -20,9 +20,11 @@ public class Principal {
               }
            }
         );
+        Window windowServer = new Window("server e usuarios", app);
+       
         //Thread envio = new Thread(app.new ExecucaoMensagem());
         app.enviarMensagem();
-        app.waitForPackets(win);
+        app.waitForPackets(windowCliente, windowServer);
        // app.receberMsgAutomatica();
         
         

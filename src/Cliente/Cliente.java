@@ -49,8 +49,10 @@ public class Cliente{
 				String[] pacote= nome.split(" ",2);
 				
 				if(pacote[0].equals("ONLINE")){
-					System.out.println("online");
-					c.add(receivePacket.getAddress(), receivePacket.getPort());
+                                        //pegando o nome do usuario
+                                        pacote = pacote[1].split("@", 2);
+                                        //pacote[0] contem nome do usuario
+                                        c.add(pacote[0], receivePacket.getAddress(), receivePacket.getPort());
 					
 				}else{
 					if(pacote[0].equals("MSG")){
@@ -90,7 +92,7 @@ public class Cliente{
 			String s =  "ONLINE "+nome+ "@";
 			byte data[] = s.getBytes();
 			sendPacket = new DatagramPacket(data, data.length,
-					grupo, 1234);			
+					grupo, 1234);
 			socket.send(sendPacket);			
 
 		} catch (IOException exception) {

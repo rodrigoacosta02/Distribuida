@@ -41,11 +41,11 @@ public class Contador {
 			System.out.println("\n "+us.getNome()+"\n tempo "+ us.getTempo());
 		}
 	}
-	public void add(InetAddress address, int port){
+	public void add(String nome, InetAddress address, int port){
 		Timer t = new Timer();
 		final int pos = userExistente(address);
 		if(pos == -1){
-			Usuario u = new Usuario(address.getHostName(),address.getHostAddress(),port);
+			Usuario u = new Usuario(nome,address.getHostAddress(),port);
 			participantes.add(u);
 			
 		}else{

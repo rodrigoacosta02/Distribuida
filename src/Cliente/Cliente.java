@@ -54,8 +54,9 @@ public class Cliente{
 					
 				}else{
 					if(pacote[0].equals("MSG")){
-						msg= "\n"+  pacote[0]+ ":" + receivePacket.getAddress() + ":" 
-						+ receivePacket.getPort() + "\n" + pacote[1];
+                                                pacote = nome.split("@", 2);
+						msg=  "\n" + pacote[0]+ ":" + receivePacket.getAddress() + ":" 
+						+ receivePacket.getPort() + "\n" + pacote[1] + "\n";
 					}
 				}
 				c.verificarTempo();

@@ -3,7 +3,6 @@ package Cliente;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.DatagramPacket;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -24,6 +23,7 @@ public class Window extends JFrame implements ActionListener {
         getContentPane().add(new JScrollPane(display),
                 BorderLayout.CENTER);
         setSize(400, 300);
+        setLocationRelativeTo(null);
         setVisible(true);
 
     }

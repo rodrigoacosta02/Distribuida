@@ -38,22 +38,22 @@ public class Usuario {
 		
 	}
 	public int getTempo() {
-		// TODO Auto-generated method stub
 		return tempo;
 	}
+        
+        /**
+         * conta tempo de usuario
+         */
 	public void contarTempo(){
 		TimerTask tt = new TimerTask() {
-			
 			@Override
 			public void run() {
 				tempo++;
 				//System.out.println(tempo+"\t" + nome);
-				
 			}
 		};
 		Timer temp = new Timer();
 		temp.scheduleAtFixedRate(tt, 0, 1000);
 	}
-	
 	
 }

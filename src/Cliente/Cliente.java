@@ -30,10 +30,13 @@ public class Cliente{
 			se.printStackTrace();
 			System.exit(1);
 		}
-
 	}
 
-
+        /**
+         * recebe pacotes e os trata
+         * 
+         * @param window 
+         */
 	public void waitForPackets(Window window) {
 		Contador c = new Contador();
 		while (true) {
@@ -48,19 +51,23 @@ public class Cliente{
 				
 				String[] pacote= nome.split(" ",2);
 				
-				if(pacote[0].equals("ONLINE")){
-                                        //pegando o nome do usuario
-                                        pacote = pacote[1].split("@", 2);
-                                        //pacote[0] contem nome do usuario
-                                        c.add(pacote[0], receivePacket.getAddress(), receivePacket.getPort());
-					
-				}else{
-					if(pacote[0].equals("MSG")){
-                                                pacote = nome.split("@", 2);
-						msg=  "\n" + pacote[0]+ ":" + receivePacket.getAddress() + ":" 
-						+ receivePacket.getPort() + "\n" + pacote[1] + "\n";
-					}
-				}
+                            switch (pacote[0]) {
+                                case "ONLINE":
+                                    //pacote[1] contem nome do usuario
+                                    c.adicionarParticipante(pacote[1], receivePacket.getAddress(), receivePacket.getPort());
+                                    break;
+                                case "MSG":
+                                    pacote = nome.split("@", 2);
+                                    msg=  "\n" + pacote[0]+ ":" + receivePacket.getAddress() + ":"
+                                            + receivePacket.getPort() + "\n" + pacote[1] + "\n";
+                                    break;
+                                case "OFFLINE":
+                                    break;
+                                case "FILE":
+                                    break;
+                                case "OK":
+                                    break;
+                            }
 				c.verificarTempo();
 				
 				window.recebimentoPacotes(msg);
@@ -68,10 +75,14 @@ public class Cliente{
 				exception.printStackTrace();
 			}
 			c.exibirLista();
-			
 		}
 	}
 
+        /**
+         * reestrutura msg de envio e a envia
+         * 
+         * @param e recebe acao da Window
+         */
 	public synchronized void envio(ActionEvent e) {
 		try {
 			String texto = "MSG "+this.nome;
@@ -87,9 +98,13 @@ public class Cliente{
 			exception.printStackTrace();
 		}
 	}
+        
+        /**
+         * Define msg automatica e envia msg
+         */
 	public void msgAutomatica(){
 		try {
-			String s =  "ONLINE "+nome+ "@";
+			String s =  "ONLINE "+nome;
 			byte data[] = s.getBytes();
 			sendPacket = new DatagramPacket(data, data.length,
 					grupo, 1234);
@@ -99,8 +114,14 @@ public class Cliente{
 			exception.printStackTrace();
 		}
 	}
+        
+        /**
+         * chama metodo msgAutomatica a cada intervalo de tempo
+         */
 	public void enviarMensagem(){
-		TimerTask tt = new TimerTask() {
+		final int intervaloTempo = 2000;
+            
+                TimerTask tt = new TimerTask() {
 			@Override
 			public void run() {
 				msgAutomatica();
@@ -108,18 +129,17 @@ public class Cliente{
 		};
 		Timer tempo = new Timer();
 
-		tempo.scheduleAtFixedRate(tt, 0, 2000);
+		tempo.scheduleAtFixedRate(tt, 0, intervaloTempo);
 		tempo = null;
-
-
 	}
-	public class ExecucaoMensagem implements Runnable{
-		public ExecucaoMensagem(){
 
-		}
-		@Override
-		public void run() {
-			enviarMensagem();
-		}
-	}
+//        public class ExecucaoMensagem implements Runnable{
+//		public ExecucaoMensagem(){
+//
+//		}
+//		@Override
+//		public void run() {
+//			enviarMensagem();
+//		}
+//	}
 }

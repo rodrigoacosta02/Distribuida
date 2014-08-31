@@ -35,8 +35,7 @@ public class Cliente{
         /**
          * recebe pacotes e os trata
          * 
-         * @param windowCliente 
-         * @param windowServer 
+         * @param janela
          */
 	public void waitForPackets(Janela janela) {
 		Contador contador = new Contador();
@@ -152,7 +151,6 @@ public class Cliente{
          */
         public void fechandoJanela() {
                 try {
-                        
 			String s =  "OFFLINE "+nome;
 			byte data[] = s.getBytes();
 			sendPacket = new DatagramPacket(data, data.length,

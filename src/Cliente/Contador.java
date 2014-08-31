@@ -9,6 +9,7 @@ public class Contador {
 	
 	private LinkedList<Usuario> participantes;
         private boolean novoParticipante;
+        
         public Contador(){
 		participantes = new LinkedList<Usuario>();
 	}
@@ -21,12 +22,18 @@ public class Contador {
             return novoParticipante;
         }
 	
-        
+        /**
+         * imprime no console IDE todos participantes
+         */
 	public void exibirLista(){
 		for (Usuario us : participantes) {
 			System.out.println("\n "+us.getNome()+"\n tempo "+ us.getTempo());
 		}
 	}
+        /**
+         * Concatena usuarios ONLINE
+         * @return concatencao de Strings
+         */
         public String imprimirParticipantes(){
             String usuarios = "\n########-- Usuarios ONLINE --##########\n";
             for (Usuario usuario : participantes) {
@@ -89,6 +96,10 @@ public class Contador {
 		}
 	}
         
+        /**
+         * removo participante pelo endereco IP
+         * @param address 
+         */
         public void removerParticipante(InetAddress address){
             for (Usuario us : participantes) {
                 if(us.getIp().equals(address.getHostAddress())){		

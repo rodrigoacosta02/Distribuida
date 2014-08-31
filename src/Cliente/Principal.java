@@ -8,11 +8,12 @@ public class Principal {
 
     public static void main(String[] args) throws IOException {
 
-        Cliente app = new Cliente("Rodrigo");
+        final Cliente app = new Cliente("Rod");
         Janela janela = new Janela(app);
         janela.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
+                app.fechandoJanela();
                 System.exit(0);
             }
         });

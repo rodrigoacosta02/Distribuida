@@ -71,6 +71,13 @@ public class Cliente{
                                     
                                     break;
                                 case "OFFLINE":
+                                    contador.removerParticipante(receivePacket.getAddress());
+                                    msg=  "\n" + nome+ ":" + receivePacket.getAddress() + ":"
+                                            + receivePacket.getPort() + "\n"; 
+                                    imprimirJanelaCliente = false;
+                                    janela.recebimentoPacotes(msg, imprimirJanelaCliente);
+                                    janela.recebimentoPacotes(contador.imprimirParticipantes(), imprimirJanelaCliente);
+
                                     break;
                                 case "FILE":
                                     break;
@@ -140,13 +147,20 @@ public class Cliente{
 		tempo = null;
 	}
 
-//        public class ExecucaoMensagem implements Runnable{
-//		public ExecucaoMensagem(){
-//
-//		}
-//		@Override
-//		public void run() {
-//			enviarMensagem();
-//		}
-//	}
+        /**
+         * Metodo ao fechar janela envia pacote como OFFLINE
+         */
+        public void fechandoJanela() {
+                try {
+                        
+			String s =  "OFFLINE "+nome;
+			byte data[] = s.getBytes();
+			sendPacket = new DatagramPacket(data, data.length,
+					grupo, 1234);
+			socket.send(sendPacket);			
+
+		} catch (IOException exception) {
+			exception.printStackTrace();
+		}
+        }
 }

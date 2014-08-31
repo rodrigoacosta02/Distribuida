@@ -88,4 +88,12 @@ public class Contador {
 			}
 		}
 	}
+        
+        public void removerParticipante(InetAddress address){
+            for (Usuario us : participantes) {
+                if(us.getIp().equals(address.getHostAddress())){		
+			participantes.remove(us);
+                }
+            }
+        }
 }

@@ -21,6 +21,7 @@ public class Receptor {
 	}
 	public void iniciarSocket(){
 		try {
+			//inicia servidor na porta
 			socket = new DatagramSocket(port);
 			System.out.println("servidor iniciado");
 
@@ -29,7 +30,7 @@ public class Receptor {
 		}
 	}
 	public void aguardaMensagem(){
-		int i = 0;
+		
 		while (true) {
 			try {
 				socket.receive(pact);
@@ -37,7 +38,7 @@ public class Receptor {
 				System.out.println(s);
 				BufferedReader m = new BufferedReader(new InputStreamReader(System.in));
 				String saida = m.readLine();
-				i++;
+				
 				buffer = ("Server :" + saida).getBytes();
 				DatagramPacket enviar = new DatagramPacket(buffer, buffer.length,pact.getAddress(),pact.getPort());
 				socket.send(enviar);

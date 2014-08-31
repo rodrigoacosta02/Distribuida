@@ -11,10 +11,10 @@ public class ReceptorArquivo {
 	private Socket server;
 	private FileOutputStream saida;
 	private InputStream stream;
-	public ReceptorArquivo(int porta) throws UnknownHostException, IOException{
+	public ReceptorArquivo(int porta,String ip) throws UnknownHostException, IOException{
 		saida = null;
 		stream = null;
-		server = new Socket("localhost", porta);
+		server = new Socket(ip, porta);
 	}
 	public void receberArquivo(String path_name) throws IOException{
 		saida = new FileOutputStream(path_name);

@@ -38,8 +38,9 @@ public class Cliente{
          * @param windowCliente 
          * @param windowServer 
          */
-	public void waitForPackets(Window windowCliente, Window windowServer) {
+	public void waitForPackets(Janela janela) {
 		Contador contador = new Contador();
+                boolean imprimirJanelaCliente = false;
 		while (true) {
 			try {
 				byte data[] = new byte[100];
@@ -56,13 +57,18 @@ public class Cliente{
                                 case "ONLINE":
                                     //pacote[1] contem nome do usuario
                                     contador.adicionarParticipante(pacote[1], receivePacket.getAddress(), receivePacket.getPort());
-                                    if(contador.isNovoParticipante())
-                                        windowServer.recebimentoPacotes(contador.imprimirParticipantes());
+                                    if(contador.isNovoParticipante()){
+                                        imprimirJanelaCliente = false;
+                                        janela.recebimentoPacotes(contador.imprimirParticipantes(), imprimirJanelaCliente);
+                                    }
                                     break;
                                 case "MSG":
                                     pacote = nome.split("@", 2);
                                     msg=  "\n" + pacote[0]+ ":" + receivePacket.getAddress() + ":"
                                             + receivePacket.getPort() + "\n" + pacote[1] + "\n";
+                                    imprimirJanelaCliente = true;
+                                    janela.recebimentoPacotes(msg, imprimirJanelaCliente);
+                                    
                                     break;
                                 case "OFFLINE":
                                     break;
@@ -72,8 +78,6 @@ public class Cliente{
                                     break;
                             }
 				contador.verificarTempo();
-				
-				windowCliente.recebimentoPacotes(msg);
 			} catch (IOException exception) {
 				exception.printStackTrace();
 			}

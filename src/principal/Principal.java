@@ -1,5 +1,7 @@
-package Cliente;
+package principal;
 
+import Cliente.Cliente;
+import gui.Janela;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;

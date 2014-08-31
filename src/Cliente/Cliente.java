@@ -1,5 +1,6 @@
 package Cliente;
 
+import gui.Janela;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -87,7 +88,7 @@ public class Cliente{
 			} catch (IOException exception) {
 				exception.printStackTrace();
 			}
-			contador.exibirLista();
+//			contador.exibirLista();
 		}
 	}
 

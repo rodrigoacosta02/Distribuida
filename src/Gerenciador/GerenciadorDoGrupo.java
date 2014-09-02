@@ -28,21 +28,5 @@ public class GerenciadorDoGrupo {
 			
 			e.printStackTrace();
 		}
-		
-		while(true){
-			
-		}
-		
-	}	
-	
-	void fecharGrupo(){
-		
 	}
-	void retirarUsuario(Usuario u){
-		/*retirar usuario apos 60 segundos sem responder*/
-	}
-	
-	
-	
-
 }

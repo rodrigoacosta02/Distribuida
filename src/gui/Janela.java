@@ -1,8 +1,12 @@
 package gui;
 
 import Cliente.Cliente;
+import Teste_Chat.Emissor;
+import Teste_Chat.Receptor;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 
 public class Janela extends javax.swing.JFrame {
@@ -134,8 +138,16 @@ public class Janela extends javax.swing.JFrame {
      * @param evt 
      */
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        Chat chat = new Chat();
-        chat.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        Emissor emissor;
+        Chat chat;
+        try {
+            emissor = new Emissor(12345);
+            chat = new Chat(emissor);
+            chat.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            new Receptor(12345, chat).start();
+        } catch (Exception ex) {
+            Logger.getLogger(Janela.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**

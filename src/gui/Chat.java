@@ -1,22 +1,24 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package gui;
 
+import Teste_Chat.Emissor;
+import Teste_Chat.Receptor;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
- *
- * @author user
+ * Janela de bate-papo 
+ * @author 
  */
 public class Chat extends javax.swing.JFrame {
 
     /**
      * Creates new form chat
+     * @param emissor
      */
-    public Chat() {
+    public Chat(Emissor emissor) {
         initComponents();
+        this.emissor = emissor;
         setLocationRelativeTo(null);
         setVisible(true);
     }
@@ -45,9 +47,15 @@ public class Chat extends javax.swing.JFrame {
 
         jLabel2.setText("Porta");
 
-        campoIP.setText("Digite o IP do destinatario");
+        campoIP.setText("192.168.0.157");
 
-        campoPorta.setText("Digite a Porta do destinatario");
+        campoPorta.setText("12345");
+
+        campoMsg.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                campoMsgActionPerformed(evt);
+            }
+        });
 
         displayMsg.setEditable(false);
         displayMsg.setColumns(20);
@@ -106,6 +114,23 @@ public class Chat extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void campoMsgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoMsgActionPerformed
+        try {
+            emissor.comunicar(campoIP.getText().trim(), campoPorta.getText().trim(), evt.getActionCommand(), this);
+            campoMsg.setText("");
+        } catch (IOException ex) {
+            Logger.getLogger(Chat.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_campoMsgActionPerformed
+    /**
+     * Imprime msg na tela do chat
+     * @param msg 
+     */
+    public void imprimirMsg(String msg) {
+        displayMsg.append(msg);
+        displayMsg.setCaretPosition(
+                displayMsg.getText().length());
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField campoIP;
@@ -117,4 +142,5 @@ public class Chat extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator2;
     // End of variables declaration//GEN-END:variables
+    private final Emissor emissor;
 }

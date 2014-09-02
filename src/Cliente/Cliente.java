@@ -17,14 +17,14 @@ public class Cliente{
 
 	private DatagramPacket sendPacket, receivePacket;
 	private MulticastSocket socket;
-	private int porta = 1234;
+	private int portaMulticast = 12347;
 	private InetAddress grupo;
 
 	public Cliente(String _nome) {
 
 		this.nome = _nome;
 		try {
-			socket = new MulticastSocket(porta);
+			socket = new MulticastSocket(portaMulticast);
 			grupo = InetAddress.getByName("230.1.2.3");
 			socket.joinGroup(grupo);
 		} catch (IOException se) {
@@ -105,7 +105,7 @@ public class Cliente{
 			texto = texto.concat("@"+msg); 
 			byte data[] = texto.getBytes();
 			sendPacket = new DatagramPacket(data, data.length,
-					grupo, 1234);
+					grupo, portaMulticast);
 			socket.send(sendPacket);
 
 		} catch (IOException exception) {
@@ -121,7 +121,7 @@ public class Cliente{
 			String s =  "ONLINE "+nome;
 			byte data[] = s.getBytes();
 			sendPacket = new DatagramPacket(data, data.length,
-					grupo, 1234);
+					grupo, portaMulticast);
 			socket.send(sendPacket);			
 
 		} catch (IOException exception) {
@@ -155,7 +155,7 @@ public class Cliente{
 			String s =  "OFFLINE "+nome;
 			byte data[] = s.getBytes();
 			sendPacket = new DatagramPacket(data, data.length,
-					grupo, 1234);
+					grupo, portaMulticast);
 			socket.send(sendPacket);			
 
 		} catch (IOException exception) {

@@ -33,6 +33,11 @@ public class Cliente{
 		}
 	}
 
+    public String getNome() {
+        return nome;
+    }
+        
+
         /**
          * recebe pacotes e os trata
          * 

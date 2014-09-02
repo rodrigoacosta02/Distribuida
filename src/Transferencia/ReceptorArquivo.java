@@ -1,6 +1,5 @@
 package Transferencia;
 
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,7 +25,7 @@ public class ReceptorArquivo {
 			saida.write(receber,0,read);			
 			saida.flush();
 			read = stream.read(receber);
-			
+                        System.out.println(".");
 		}
 		System.out.println("fim da transferencia");
 	}

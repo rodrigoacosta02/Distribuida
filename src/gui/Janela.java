@@ -3,10 +3,11 @@ package gui;
 import Cliente.Cliente;
 import Teste_Chat.Emissor;
 import Teste_Chat.Receptor;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import Transferencia.TransmissorArquivo;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 
 public class Janela extends javax.swing.JFrame {
@@ -45,7 +46,7 @@ public class Janela extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        menuNovaConversa = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -75,13 +76,14 @@ public class Janela extends javax.swing.JFrame {
 
         jMenu2.setText("Nova Conversa");
 
-        jMenuItem1.setText("Nova");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        menuNovaConversa.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
+        menuNovaConversa.setText("Nova");
+        menuNovaConversa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                menuNovaConversaActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem1);
+        jMenu2.add(menuNovaConversa);
 
         jMenuBar1.add(jMenu2);
 
@@ -135,20 +137,21 @@ public class Janela extends javax.swing.JFrame {
     }//GEN-LAST:event_enterActionPerformed
     /**
      * abre nova janela para bate-papo
-     * @param evt 
+     *
+     * @param evt
      */
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void menuNovaConversaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuNovaConversaActionPerformed
         Emissor emissor;
         Chat chat;
         try {
             emissor = new Emissor(12345);
-            chat = new Chat(emissor);
+            chat = new Chat(emissor, cliente.getNome());
             chat.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             new Receptor(12345, chat).start();
         } catch (Exception ex) {
             Logger.getLogger(Janela.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_menuNovaConversaActionPerformed
 
     /**
      * recebe msg e mostra na tela correspondente a server ou usuario
@@ -173,11 +176,11 @@ public class Janela extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextField jTextFieldServer;
+    private javax.swing.JMenuItem menuNovaConversa;
     private javax.swing.JTextArea windowCliente;
     private javax.swing.JTextArea windowServer;
     // End of variables declaration//GEN-END:variables

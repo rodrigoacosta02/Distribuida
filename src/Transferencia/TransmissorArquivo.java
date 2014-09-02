@@ -6,9 +6,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.URL;
-
-import com.sun.org.apache.xerces.internal.util.URI;
 
 public class TransmissorArquivo {
 	private OutputStream saida;

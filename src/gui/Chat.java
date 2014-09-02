@@ -1,24 +1,31 @@
 package gui;
 
 import Teste_Chat.Emissor;
-import Teste_Chat.Receptor;
+import Transferencia.ReceptorArquivo;
+import Transferencia.TransmissorArquivo;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 
 /**
- * Janela de bate-papo 
- * @author 
+ * Janela de bate-papo
+ *
+ * @author
  */
 public class Chat extends javax.swing.JFrame {
 
     /**
      * Creates new form chat
+     *
      * @param emissor
      */
-    public Chat(Emissor emissor) {
+    public Chat(Emissor emissor, String nome) {
         initComponents();
         this.emissor = emissor;
+        this.nomeUserLocal = nome;
         setLocationRelativeTo(null);
         setVisible(true);
     }
@@ -40,6 +47,10 @@ public class Chat extends javax.swing.JFrame {
         campoMsg = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         displayMsg = new javax.swing.JTextArea();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenu2 = new javax.swing.JMenu();
+        menuEnviarArquivo = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -61,6 +72,24 @@ public class Chat extends javax.swing.JFrame {
         displayMsg.setColumns(20);
         displayMsg.setRows(5);
         jScrollPane2.setViewportView(displayMsg);
+
+        jMenu1.setText("File");
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Outros");
+
+        menuEnviarArquivo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_MASK));
+        menuEnviarArquivo.setText("Enviar Arquivo");
+        menuEnviarArquivo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuEnviarArquivoActionPerformed(evt);
+            }
+        });
+        jMenu2.add(menuEnviarArquivo);
+
+        jMenuBar1.add(jMenu2);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -108,7 +137,7 @@ public class Chat extends javax.swing.JFrame {
                 .addComponent(campoMsg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -122,9 +151,81 @@ public class Chat extends javax.swing.JFrame {
             Logger.getLogger(Chat.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_campoMsgActionPerformed
+
+    private void menuEnviarArquivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuEnviarArquivoActionPerformed
+        // inicio selecionar arquivo
+        JFileChooser abrir = new JFileChooser();
+        int retorno = abrir.showOpenDialog(null);
+        
+        String msg;
+        if (retorno == JFileChooser.APPROVE_OPTION) {
+            msg = "FILE " + nomeUserLocal + " : " + abrir.getSelectedFile().getName()
+                    + " : " + abrir.getSelectedFile().length() + " Bytes\n";
+            caminho = abrir.getSelectedFile().getAbsolutePath();
+
+            System.out.println("caminho - " + abrir.getSelectedFile().getName());
+            try {
+                emissor.comunicar(campoIP.getText().trim(), campoPorta.getText().trim(),
+                        msg, this);
+            } catch (IOException ex) {
+                Logger.getLogger(Chat.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }// fim selecionar arquivo
+
+    }//GEN-LAST:event_menuEnviarArquivoActionPerformed
+    /**
+     * pergunta se quer receber arquivo
+     *
+     * @param address
+     * @param nomeArquivo
+     */
+    public void receberArquivo(InetAddress address, String nomeArquivo) {
+        if (JOptionPane.showConfirmDialog(null, "voce deseja reber o arquivo?", "WARNING",
+                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            try {
+                
+                String msg = "OK " + nomeArquivo + " : " + 12349 + "\n";
+                
+                emissor.comunicar(campoIP.getText().trim(), campoPorta.getText().trim(),
+                        msg, this);
+                ReceptorArquivo receptorArquivo
+                        = new ReceptorArquivo(12349, address.getHostAddress());
+
+                JFileChooser abrir = new JFileChooser();
+                int retorno = abrir.showSaveDialog(null);
+                System.out.println("aceita3");
+                String caminho = new String();
+                if (retorno == JFileChooser.APPROVE_OPTION) {
+                    caminho = abrir.getSelectedFile().getAbsolutePath();
+
+                    System.out.println("caminho - " + caminho);
+                }
+                caminho = caminho.concat(nomeArquivo);
+                receptorArquivo.receberArquivo(caminho);
+                System.out.println("aceita4");
+
+            } catch (IOException ex) {
+                Logger.getLogger(Chat.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            System.out.println("operacao de envio nao autorizada");
+        }
+    }
+
+    public void enviarArquivo(String porta) {
+        int portaTCP = Integer.parseInt(porta);
+        try {
+            TransmissorArquivo transmitirArquivo = new TransmissorArquivo(portaTCP);
+            transmitirArquivo.iniciarTransferencia(caminho);
+        } catch (IOException ex) {
+            Logger.getLogger(Janela.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     /**
      * Imprime msg na tela do chat
-     * @param msg 
+     *
+     * @param msg
      */
     public void imprimirMsg(String msg) {
         displayMsg.append(msg);
@@ -139,8 +240,14 @@ public class Chat extends javax.swing.JFrame {
     private javax.swing.JTextArea displayMsg;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JMenuItem menuEnviarArquivo;
     // End of variables declaration//GEN-END:variables
+    private final String nomeUserLocal;
     private final Emissor emissor;
+    private String caminho = new String();
 }

@@ -1,14 +1,14 @@
 package gui;
 
 import Teste_Chat.Emissor;
-import Transferencia.ReceptorArquivo;
-import Transferencia.TransmissorArquivo;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import transferencia.ReceptorArquivo;
+import transferencia.TransmissorArquivo;
 
 /**
  * Janela de bate-papo

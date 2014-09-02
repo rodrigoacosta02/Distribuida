@@ -1,12 +1,8 @@
 package Teste_Chat;
 
-import Transferencia.ReceptorArquivo;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
-import java.net.InetAddress;
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
 
 public class Receptor extends Thread {
 

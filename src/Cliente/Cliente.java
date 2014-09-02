@@ -13,16 +13,17 @@ import java.util.TimerTask;
 @SuppressWarnings("serial")
 public class Cliente{
 
-	private String nome;
-
-	private DatagramPacket sendPacket, receivePacket;
+    private DatagramPacket sendPacket, receivePacket;
 	private MulticastSocket socket;
-	private int portaMulticast = 12347;
 	private InetAddress grupo;
-
-	public Cliente(String _nome) {
+	private final String nome;
+	private final int portaMulticast = 12347;
+        private final int portaDatagramSocket;
+        
+	public Cliente(String _nome, int portaDatagramSocket) {
 
 		this.nome = _nome;
+                this.portaDatagramSocket = portaDatagramSocket;
 		try {
 			socket = new MulticastSocket(portaMulticast);
 			grupo = InetAddress.getByName("230.1.2.3");
@@ -36,7 +37,6 @@ public class Cliente{
     public String getNome() {
         return nome;
     }
-        
 
         /**
          * recebe pacotes e os trata
@@ -54,19 +54,19 @@ public class Cliente{
 				socket.receive(receivePacket);
 				
 				String nome = new String(receivePacket.getData(), 0, receivePacket.getLength());
-				String[] pacote= nome.split(" ",2);
+				String[] pacote= nome.split(" ",3); // [0]-TIPO ## [1]- nome ## [2] - portaDatagram
 				
                             switch (pacote[0]) {
                                 case "ONLINE":
                                     //pacote[1] contem nome do usuario
-                                    contador.adicionarParticipante(pacote[1], receivePacket.getAddress(), receivePacket.getPort());
+                                    contador.adicionarParticipante(pacote[1], receivePacket.getAddress(), Integer.parseInt(pacote[2].trim()));
                                     if(contador.isNovoParticipante()){
                                         imprimirJanelaCliente = false;
                                         janela.recebimentoPacotes(contador.imprimirParticipantes(), imprimirJanelaCliente);
                                     }
                                     break;
                                 case "MSG":
-                                    pacote = nome.split("@", 2);
+                                    pacote = nome.split(" ", 3);
                                     msg=  "\n" + pacote[0]+ ":" + receivePacket.getAddress() + ":"
                                             + receivePacket.getPort() + "\n" + pacote[1] + "\n";
                                     imprimirJanelaCliente = true;
@@ -97,10 +97,10 @@ public class Cliente{
          */
 	public synchronized void envio(ActionEvent e) {
 		try {
-			String texto = "MSG "+this.nome;
+			String texto = "MSG " + this.nome + " " + portaDatagramSocket;
 
 			String msg = e.getActionCommand();
-			texto = texto.concat("@"+msg); 
+			texto = texto.concat(msg); 
 			byte data[] = texto.getBytes();
 			sendPacket = new DatagramPacket(data, data.length,
 					grupo, portaMulticast);
@@ -116,7 +116,9 @@ public class Cliente{
          */
 	public void msgAutomatica(){
 		try {
-			String s =  "ONLINE "+nome;
+			String s =  "ONLINE "+this.nome 
+                                + " " + this.portaDatagramSocket;
+		;
 			byte data[] = s.getBytes();
 			sendPacket = new DatagramPacket(data, data.length,
 					grupo, portaMulticast);

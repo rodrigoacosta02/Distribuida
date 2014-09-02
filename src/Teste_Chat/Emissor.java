@@ -4,23 +4,28 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.net.SocketException;
+import java.net.UnknownHostException;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Emissor {
-	byte buffer[];
-	int porta;
-	DatagramPacket msg;
-	DatagramSocket server;
-	InetAddress host;
+	private byte buffer[];
+	private final int porta;
+	private DatagramSocket server;
+	private InetAddress host;
 	
-        public Emissor(int _p) throws Exception{
-//		this.porta = _p;
+        public Emissor() {
 		this.porta = new Random().nextInt(9000) + 1000;
                 System.out.println("porta -> " + this.porta);
 		buffer = new byte[1024];
-		this.msg = new DatagramPacket(buffer, buffer.length);
-		this.server = new DatagramSocket();
+            try {
+                this.server = new DatagramSocket();
 		this.host = InetAddress.getLocalHost();
+            } catch (SocketException | UnknownHostException ex) {
+                Logger.getLogger(Emissor.class.getName()).log(Level.SEVERE, null, ex);
+            }
 	}
 
     public int getPorta() {

@@ -13,10 +13,12 @@ public class Janela extends javax.swing.JFrame {
      * Creates new form Janela
      *
      * @param cliente
+     * @param emissor
      */
-    public Janela(Cliente cliente) {
+    public Janela(Cliente cliente, Emissor emissor) {
         initComponents();
         this.cliente = cliente;
+        this.emissor = emissor;
         setLocationRelativeTo(null);
         setVisible(true);
     }
@@ -138,13 +140,11 @@ public class Janela extends javax.swing.JFrame {
      * @param evt
      */
     private void menuNovaConversaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuNovaConversaActionPerformed
-        Emissor emissor;
         Chat chat;
         try {
-            emissor = new Emissor(12345);
             chat = new Chat(emissor, cliente.getNome());
             chat.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            new Receptor(12345, chat).start();
+            new Receptor(emissor.getPorta(), chat).start();
         } catch (Exception ex) {
             Logger.getLogger(Janela.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -182,4 +182,5 @@ public class Janela extends javax.swing.JFrame {
     private javax.swing.JTextArea windowServer;
     // End of variables declaration//GEN-END:variables
     private Cliente cliente;
+    private Emissor emissor;
 }

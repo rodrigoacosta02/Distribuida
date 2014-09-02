@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.Random;
 
 /**
  * Cliente Socket Stream
@@ -14,19 +15,23 @@ public class ReceptorArquivo {
 	private final Socket socket;
 	private FileOutputStream saida;
 	private InputStream stream;
-
+        private final int portaTCP;
         /**
          * Instancia socket cliente
-         * @param porta
          * @param ip 
          * @throws UnknownHostException
          * @throws IOException 
          */
-        public ReceptorArquivo(int porta,String ip) throws UnknownHostException, IOException{
+        public ReceptorArquivo(String ip) throws UnknownHostException, IOException{
 		saida = null;
 		stream = null;
-		socket = new Socket(ip, porta);
+                portaTCP = new Random().nextInt(9000) + 50000;
+		socket = new Socket(ip, portaTCP);
 	}
+
+    public int getPortaTCP() {
+        return portaTCP;
+    }
 	
         /**
          * recebe arquivo enviado

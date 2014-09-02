@@ -188,12 +188,12 @@ public class Chat extends javax.swing.JFrame {
                 JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
             try {
                 
-                String msg = "OK " + nomeArquivo + " : " + 12349 + "\n";
+                ReceptorArquivo receptorArquivo
+                        = new ReceptorArquivo(address.getHostAddress());
+                String msg = "OK " + nomeArquivo + " : " + receptorArquivo.getPortaTCP() + "\n";
                 
                 emissor.comunicar(campoIP.getText().trim(), 
                         campoPorta.getText().trim(), msg, this);
-                ReceptorArquivo receptorArquivo
-                        = new ReceptorArquivo(12349, address.getHostAddress());
 
                 JFileChooser abrir = new JFileChooser();
                 int retorno = abrir.showSaveDialog(null);

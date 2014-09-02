@@ -20,7 +20,7 @@ public class Emissor {
 	private DatagramSocket server;
 	
         public Emissor() {
-		this.porta = new Random().nextInt(9000) + 1000;
+		this.porta = new Random().nextInt(9000) + 50000;
                 System.out.println("porta -> " + this.porta);
 		buffer = new byte[1024];
             try {

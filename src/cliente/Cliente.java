@@ -58,11 +58,11 @@ public class Cliente{
 				socket.receive(receivePacket);
 				
 				String nome = new String(receivePacket.getData(), 0, receivePacket.getLength());
-				String[] pacote= nome.split(" ",3); // [0]-TIPO ## [1]- nome ## [2] - portaDatagram
+				String[] pacote= nome.split(" ",4); 
+                        // [0]-TIPO ## [1]- nome ## [2] - portaDatagram ## [3] - mensagem
 				
                             switch (pacote[0]) {
                                 case "ONLINE":
-                                    //pacote[1] contem nome do usuario
                                     contador.adicionarParticipante(pacote[1], receivePacket.getAddress(), Integer.parseInt(pacote[2].trim()));
                                     if(contador.isNovoParticipante()){
                                         imprimirJanelaCliente = false;
@@ -70,9 +70,8 @@ public class Cliente{
                                     }
                                     break;
                                 case "MSG":
-                                    pacote = nome.split(" ", 3);
-                                    msg=  "\n" + pacote[0]+ ":" + receivePacket.getAddress() + ":"
-                                            + receivePacket.getPort() + "\n" + pacote[1] + "\n";
+                                    msg=  "\n" + pacote[0]+ ":" + pacote[1] + ":"
+                                            + "\n" + pacote[3] + "\n";
                                     imprimirJanelaCliente = true;
                                     janela.recebimentoPacotes(msg, imprimirJanelaCliente);
                                     
@@ -101,7 +100,8 @@ public class Cliente{
          */
 	public synchronized void envio(ActionEvent e) {
 		try {
-			String texto = "MSG " + this.nome + " " + portaDatagramSocket;
+			String texto = "MSG " + this.nome + " " 
+                                + portaDatagramSocket+ " " ;
 
 			String msg = e.getActionCommand();
 			texto = texto.concat(msg); 

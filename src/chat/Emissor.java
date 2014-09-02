@@ -40,24 +40,22 @@ public class Emissor {
          * Metodo que envia a msg especifica para o endereco ip e a porta informados
          * nos campos
          * 
+         * @param nome
          * @param ip
          * @param porta
          * @param msg
          * @param chat
          * @throws IOException 
          */
-	public void comunicar(String ip, String porta, String msg, gui.Chat chat) throws IOException{
+	public void comunicar(String nome, String ip, String porta, String msg, gui.Chat chat) throws IOException{
                 InetAddress ip_destino = InetAddress.getByName(ip);
 		int portaDestino = Integer.parseInt(porta);
+                msg = "MSG " + nome + " : \n" + msg + "\n";
                 buffer = msg.getBytes();
                 DatagramPacket mandar = new DatagramPacket(buffer, buffer.length, 
                                         ip_destino, portaDestino);
                 server.send(mandar);
-                
-                //windows host.getHostAddress() == ip da maquina
-                //linux host.getHostAddress() == 127.0.0.1
-                msg = "\n" + host.getHostAddress()+ ":" + porta + "\n" 
-                           +  new String(mandar.getData(), 0, mandar.getLength());
+ 
                 chat.imprimirMsg(msg);
 	}
 

@@ -59,7 +59,7 @@ public class Contador {
          * @param port porta usuario
          */
 	public void adicionarParticipante(String nome, InetAddress address, int port){
-		final int pos = userExistente(address);
+		final int pos = userExistente(address, port);
 		if(pos == -1){
 			Usuario u = new Usuario(nome,address.getHostAddress(),port);
 			participantes.add(u);
@@ -75,13 +75,14 @@ public class Contador {
          * na lista de participante
          * 
          * @param address endereco
+         * @param porta posta
          * @return posicao de usuario existente, 
          * caso retorno -1 usuario inexistente
          */
-        public int userExistente(InetAddress address){
+        public int userExistente(InetAddress address, int porta){
             int i = 0;
             for(Usuario us : participantes){
-                if(us.getIp().equals(address.getHostAddress())){		
+                if(us.getIp().equals(address.getHostAddress()) && us.getPorta() == porta){		
                     return i;
                 }
                 i++;

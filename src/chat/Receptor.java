@@ -1,5 +1,6 @@
 package chat;
 
+import cliente.Contador;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -43,12 +44,14 @@ public class Receptor extends Thread {
                 socket.receive(pacote);
                 String msgPacote = new String(pacote.getData(), 0, pacote.getLength());
                 
-                String msg1 = "\n" + pacote.getAddress() + ":" + pacote.getPort() + "\n"
-                        + msgPacote;
-                chat.imprimirMsg(msg1);
-                
                 String partesString [] = msgPacote.split(" ");
+                //[0] - TIPO ## [1] - nome do user de envio ## [2] mensagem eviada
                 switch (partesString[0]) {
+                    case "MSG" : 
+//                        String msg1 =  partesString[0] + ":"  +partesString[1] + ":" + "\n"
+//                                + partesString[2];
+                        chat.imprimirMsg(msgPacote);
+                        break;
                     case "FILE":
                         chat.receberArquivo(pacote.getAddress(), partesString[3]);
                         break;

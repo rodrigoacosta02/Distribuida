@@ -44,7 +44,7 @@ public class Usuario {
         /**
          * conta tempo de usuario
          */
-	public void contarTempo(){
+	private void contarTempo(){
 		TimerTask tt = new TimerTask() {
 			@Override
 			public void run() {

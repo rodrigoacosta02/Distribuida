@@ -14,9 +14,9 @@ public class Emissor {
 	InetAddress host;
 	
         public Emissor(int _p) throws Exception{
-		this.porta = _p;
-//		this.porta = new Random().nextInt(9000) + 1000;
-//                System.out.println("porta -> " + this.porta);
+//		this.porta = _p;
+		this.porta = new Random().nextInt(9000) + 1000;
+                System.out.println("porta -> " + this.porta);
 		buffer = new byte[1024];
 		this.msg = new DatagramPacket(buffer, buffer.length);
 		this.server = new DatagramSocket();

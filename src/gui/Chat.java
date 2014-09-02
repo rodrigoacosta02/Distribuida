@@ -21,6 +21,7 @@ public class Chat extends javax.swing.JFrame {
      * Creates new form chat
      *
      * @param emissor
+     * @param nome
      */
     public Chat(Emissor emissor, String nome) {
         initComponents();
@@ -193,16 +194,13 @@ public class Chat extends javax.swing.JFrame {
 
                 JFileChooser abrir = new JFileChooser();
                 int retorno = abrir.showSaveDialog(null);
-                System.out.println("aceita3");
                 String caminho = new String();
                 if (retorno == JFileChooser.APPROVE_OPTION) {
                     caminho = abrir.getSelectedFile().getAbsolutePath();
-
                     System.out.println("caminho - " + caminho);
                 }
                 caminho = caminho.concat(nomeArquivo);
                 receptorArquivo.receberArquivo(caminho);
-                System.out.println("aceita4");
 
             } catch (IOException ex) {
                 Logger.getLogger(Chat.class.getName()).log(Level.SEVERE, null, ex);

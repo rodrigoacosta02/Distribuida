@@ -3,11 +3,8 @@ package gui;
 import Cliente.Cliente;
 import Teste_Chat.Emissor;
 import Teste_Chat.Receptor;
-import Transferencia.TransmissorArquivo;
-import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 
 public class Janela extends javax.swing.JFrame {

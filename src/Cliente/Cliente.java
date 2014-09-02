@@ -51,11 +51,9 @@ public class Cliente{
 				byte data[] = new byte[100];
 				String msg = new String();
 				receivePacket = new DatagramPacket(data, data.length);
-
 				socket.receive(receivePacket);
 				
 				String nome = new String(receivePacket.getData(), 0, receivePacket.getLength());
-				
 				String[] pacote= nome.split(" ",2);
 				
                             switch (pacote[0]) {
@@ -84,16 +82,11 @@ public class Cliente{
                                     janela.recebimentoPacotes(contador.imprimirParticipantes(), imprimirJanelaCliente);
 
                                     break;
-                                case "FILE":
-                                    break;
-                                case "OK":
-                                    break;
                             }
 				contador.verificarTempo();
 			} catch (IOException exception) {
 				exception.printStackTrace();
 			}
-//			contador.exibirLista();
 		}
 	}
 
@@ -129,7 +122,7 @@ public class Cliente{
 					grupo, portaMulticast);
 			socket.send(sendPacket);			
 
-		} catch (IOException exception) {
+                } catch (IOException exception) {
 			exception.printStackTrace();
 		}
 	}
@@ -147,7 +140,6 @@ public class Cliente{
 			}
 		};
 		Timer tempo = new Timer();
-
 		tempo.scheduleAtFixedRate(tt, 0, intervaloTempo);
 		tempo = null;
 	}

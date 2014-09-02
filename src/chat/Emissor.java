@@ -18,7 +18,6 @@ public class Emissor {
 	private byte buffer[];
 	private final int porta;
 	private DatagramSocket server;
-	private InetAddress host;
 	
         public Emissor() {
 		this.porta = new Random().nextInt(9000) + 1000;
@@ -26,8 +25,7 @@ public class Emissor {
 		buffer = new byte[1024];
             try {
                 this.server = new DatagramSocket();
-		this.host = InetAddress.getLocalHost();
-            } catch (SocketException | UnknownHostException ex) {
+            } catch (SocketException ex) {
                 Logger.getLogger(Emissor.class.getName()).log(Level.SEVERE, null, ex);
             }
 	}
@@ -40,17 +38,16 @@ public class Emissor {
          * Metodo que envia a msg especifica para o endereco ip e a porta informados
          * nos campos
          * 
-         * @param nome
          * @param ip
          * @param porta
          * @param msg
          * @param chat
          * @throws IOException 
          */
-	public void comunicar(String nome, String ip, String porta, String msg, gui.Chat chat) throws IOException{
+	public void comunicar(String ip, String porta, String msg, gui.Chat chat) throws IOException{
                 InetAddress ip_destino = InetAddress.getByName(ip);
 		int portaDestino = Integer.parseInt(porta);
-                msg = "MSG " + nome + " : \n" + msg + "\n";
+
                 buffer = msg.getBytes();
                 DatagramPacket mandar = new DatagramPacket(buffer, buffer.length, 
                                         ip_destino, portaDestino);

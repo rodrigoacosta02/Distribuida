@@ -146,8 +146,10 @@ public class Chat extends javax.swing.JFrame {
 
     private void campoMsgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoMsgActionPerformed
         try {
-            emissor.comunicar(nomeUserLocal, campoIP.getText().trim(), 
-                    campoPorta.getText().trim(), evt.getActionCommand(), this);
+            String msg = "MSG " + nomeUserLocal + " :\n"
+                    + evt.getActionCommand() + "\n";
+            emissor.comunicar(campoIP.getText().trim(), 
+                    campoPorta.getText().trim(), msg , this);
             campoMsg.setText("");
         } catch (IOException ex) {
             Logger.getLogger(Chat.class.getName()).log(Level.SEVERE, null, ex);
@@ -167,7 +169,7 @@ public class Chat extends javax.swing.JFrame {
 
             System.out.println("caminho - " + abrir.getSelectedFile().getName());
             try {
-                emissor.comunicar(nomeUserLocal, campoIP.getText().trim(), 
+                emissor.comunicar(campoIP.getText().trim(), 
                         campoPorta.getText().trim(), msg, this);
             } catch (IOException ex) {
                 Logger.getLogger(Chat.class.getName()).log(Level.SEVERE, null, ex);
@@ -188,7 +190,7 @@ public class Chat extends javax.swing.JFrame {
                 
                 String msg = "OK " + nomeArquivo + " : " + 12349 + "\n";
                 
-                emissor.comunicar(nomeUserLocal, campoIP.getText().trim(), 
+                emissor.comunicar(campoIP.getText().trim(), 
                         campoPorta.getText().trim(), msg, this);
                 ReceptorArquivo receptorArquivo
                         = new ReceptorArquivo(12349, address.getHostAddress());

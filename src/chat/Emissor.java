@@ -1,4 +1,4 @@
-package Teste_Chat;
+package chat;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -10,6 +10,10 @@ import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Socket Datagrama - envia pacotes datagrama
+ * @author
+ */
 public class Emissor {
 	private byte buffer[];
 	private final int porta;
@@ -28,9 +32,9 @@ public class Emissor {
             }
 	}
 
-    public int getPorta() {
-        return porta;
-    }
+        public int getPorta() {
+            return porta;
+        }
         
         /**
          * Metodo que envia a msg especifica para o endereco ip e a porta informados
@@ -49,7 +53,6 @@ public class Emissor {
                 DatagramPacket mandar = new DatagramPacket(buffer, buffer.length, 
                                         ip_destino, portaDestino);
                 server.send(mandar);
-                
                 
                 //windows host.getHostAddress() == ip da maquina
                 //linux host.getHostAddress() == 127.0.0.1

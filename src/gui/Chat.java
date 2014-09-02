@@ -1,6 +1,6 @@
 package gui;
 
-import Teste_Chat.Emissor;
+import chat.Emissor;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.util.logging.Level;

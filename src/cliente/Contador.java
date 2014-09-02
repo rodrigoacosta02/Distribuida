@@ -1,10 +1,15 @@
-package Cliente;
+package cliente;
 
 import java.net.InetAddress;
 import java.util.LinkedList;
 
-import Gerenciador.Usuario;
+import gerenciador.Usuario;
 
+/**
+ * trata participantes da lista Multicast
+ * 
+ * @author
+ */
 public class Contador {
 	
 	private LinkedList<Usuario> participantes;
@@ -26,13 +31,13 @@ public class Contador {
          * imprime no console IDE todos participantes
          */
 	public void exibirLista(){
-		for (Usuario us : participantes) {
-			System.out.println("\n "+us.getNome()+"\n tempo "+ us.getTempo());
-		}
+            for (Usuario us : participantes) {
+                System.out.println("\n "+us.getNome()+"\n tempo "+ us.getTempo());
+            }
 	}
         /**
          * Concatena usuarios ONLINE
-         * @return concatencao de Strings
+         * @return concatencao de usuarios online
          */
         public String imprimirParticipantes(){
             String usuarios = "\n########-- Usuarios ONLINE --##########\n";
@@ -74,14 +79,14 @@ public class Contador {
          * caso retorno -1 usuario inexistente
          */
         public int userExistente(InetAddress address){
-		int i = 0;
-		for(Usuario us : participantes){
-			if(us.getIp().equals(address.getHostAddress())){		
-				return i;
-			}
-			i++;
-		}
-		return -1;
+            int i = 0;
+            for(Usuario us : participantes){
+                if(us.getIp().equals(address.getHostAddress())){		
+                    return i;
+                }
+                i++;
+            }
+            return -1;
 	}
 
         /**
@@ -89,11 +94,11 @@ public class Contador {
          * seu tempo tenha passado do limite
          */
         public void verificarTempo() {
-		for (Usuario us : participantes) {
-			if(us.getTempo() > 10){
-				participantes.remove(us);
-			}
-		}
+            for (Usuario us : participantes) {
+                if(us.getTempo() > 10){
+                    participantes.remove(us);
+                }
+            }
 	}
         
         /**
@@ -103,7 +108,7 @@ public class Contador {
         public void removerParticipante(InetAddress address){
             for (Usuario us : participantes) {
                 if(us.getIp().equals(address.getHostAddress())){		
-			participantes.remove(us);
+                    participantes.remove(us);
                 }
             }
         }

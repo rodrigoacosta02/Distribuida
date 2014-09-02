@@ -5,8 +5,8 @@
  */
 package gui;
 
-import Cliente.Cliente;
-import Teste_Chat.Emissor;
+import cliente.Cliente;
+import chat.Emissor;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 

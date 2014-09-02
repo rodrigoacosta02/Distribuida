@@ -1,4 +1,4 @@
-package Cliente;
+package cliente;
 
 import gui.Janela;
 import java.awt.event.ActionEvent;
@@ -9,11 +9,15 @@ import java.net.MulticastSocket;
 import java.util.Timer;
 import java.util.TimerTask;
 
-
+/**
+ * Socket Multicast
+ * 
+ * @author 
+ */
 @SuppressWarnings("serial")
 public class Cliente{
 
-    private DatagramPacket sendPacket, receivePacket;
+        private DatagramPacket sendPacket, receivePacket;
 	private MulticastSocket socket;
 	private InetAddress grupo;
 	private final String nome;
@@ -39,7 +43,7 @@ public class Cliente{
     }
 
         /**
-         * recebe pacotes e os trata
+         * recebe pacotes multicast e os trata
          * 
          * @param janela
          */
@@ -114,7 +118,7 @@ public class Cliente{
         /**
          * Define msg automatica e envia msg
          */
-	public void msgAutomatica(){
+	private void msgAutomatica(){
 		try {
 			String s =  "ONLINE "+this.nome 
                                 + " " + this.portaDatagramSocket;

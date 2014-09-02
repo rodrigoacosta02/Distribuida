@@ -1,14 +1,15 @@
-package Gerenciador;
+package gerenciador;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class Usuario {
-	String nome;
-	String ip;
-	int porta;
-	int tempo;
-	public Usuario(String hostName, String hostAddress, int port) {
+	private String nome;
+	private String ip;
+	private int porta;
+	private int tempo;
+	
+        public Usuario(String hostName, String hostAddress, int port) {
 		nome = hostName;
 		ip = hostAddress;
 		porta = port;
@@ -35,7 +36,6 @@ public class Usuario {
 	}
 	public void zerarTempo() {
 		tempo = 0;
-		
 	}
 	public int getTempo() {
 		return tempo;

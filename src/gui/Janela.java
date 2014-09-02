@@ -1,8 +1,8 @@
 package gui;
 
-import Cliente.Cliente;
-import Teste_Chat.Emissor;
-import Teste_Chat.Receptor;
+import cliente.Cliente;
+import chat.Emissor;
+import chat.Receptor;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;

@@ -5,13 +5,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Cliente Socket Stream
  * @author 
  */
 public class ReceptorArquivo {
-	private final Socket socket;
+	private  Socket socket;
 	private FileOutputStream saida;
 	private InputStream stream;
         private final int portaTCP;
@@ -19,15 +21,17 @@ public class ReceptorArquivo {
          * Instancia socket cliente
          * @param ip 
          * @param porta 
-         * @throws UnknownHostException
-         * @throws IOException 
          */
-        public ReceptorArquivo(String ip, int porta) throws UnknownHostException, IOException{
+        public ReceptorArquivo(String ip, int porta){
 		saida = null;
 		stream = null;
                 portaTCP = porta;
-		socket = new Socket(ip, portaTCP);
-	}
+            try {
+                socket = new Socket(ip, portaTCP);
+            } catch (IOException ex) {
+                Logger.getLogger(ReceptorArquivo.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
 
     public int getPortaTCP() {
         return portaTCP;
@@ -43,11 +47,11 @@ public class ReceptorArquivo {
 		saida = new FileOutputStream(path_name);
 		stream = socket.getInputStream();
 		byte receber[] = new byte[1024];
-		int read;
+		int qntidadeLida;
 		
                 System.out.println("iniciando recepcao");
-                while((read = stream.read(receber)) != -1){			
-			saida.write(receber,0,read);			
+                while((qntidadeLida = stream.read(receber)) != -1){			
+			saida.write(receber,0,qntidadeLida);			
 			saida.flush();
 		}
                 socket.close();

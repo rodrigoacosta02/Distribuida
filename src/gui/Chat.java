@@ -189,7 +189,8 @@ public class Chat extends javax.swing.JFrame {
         if (JOptionPane.showConfirmDialog(null, msg + "\nVoce deseja receber o arquivo?", "WARNING",
                 JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                 
-               int portaTCP = new Random().nextInt(9000) + 50000;
+//               int portaTCP = new Random().nextInt(9000) + 50000;
+                int portaTCP = 12348;
                 msg = "OK " + nomeArquivo + " : " + portaTCP + "\n";
 
                 emissor.comunicar(campoIP.getText().trim(), 

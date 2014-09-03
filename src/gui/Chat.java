@@ -3,6 +3,7 @@ package gui;
 import chat.Emissor;
 import java.io.IOException;
 import java.net.InetAddress;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
@@ -182,18 +183,20 @@ public class Chat extends javax.swing.JFrame {
      *
      * @param address
      * @param nomeArquivo
+     * @throws java.io.IOException
      */
-    public void receberArquivo(InetAddress address, String nomeArquivo) {
+    public void receberArquivo(InetAddress address, String nomeArquivo) throws IOException {
+        String msg;
         if (JOptionPane.showConfirmDialog(null, "voce deseja receber o arquivo?", "WARNING",
                 JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-            try {
                 
-                ReceptorArquivo receptorArquivo
-                        = new ReceptorArquivo(address.getHostAddress());
-                String msg = "OK " + nomeArquivo + " : " + receptorArquivo.getPortaTCP() + "\n";
-                
+               int portaTCP = new Random().nextInt(9000) + 50000;
+                msg = "OK " + nomeArquivo + " : " + portaTCP + "\n";
+
                 emissor.comunicar(campoIP.getText().trim(), 
                         campoPorta.getText().trim(), msg, this);
+                ReceptorArquivo receptorArquivo
+                        = new ReceptorArquivo(address.getHostAddress(), portaTCP);
 
                 JFileChooser abrir = new JFileChooser();
                 int retorno = abrir.showSaveDialog(null);
@@ -202,14 +205,15 @@ public class Chat extends javax.swing.JFrame {
                     caminho = abrir.getSelectedFile().getAbsolutePath();
                     System.out.println("caminho - " + caminho);
                 }
-                caminho = caminho.concat(nomeArquivo);
+//                caminho = caminho.concat(nomeArquivo);
                 receptorArquivo.receberArquivo(caminho);
 
-            } catch (IOException ex) {
-                Logger.getLogger(Chat.class.getName()).log(Level.SEVERE, null, ex);
-            }
         } else {
             imprimirMsg("\n\n**Tranferencia nao autorizada\n\n");
+            msg = "MSG **Tranferencia nao autorizada ";
+            emissor.comunicar(campoIP.getText().trim(), 
+                        campoPorta.getText().trim(), msg, this);
+                
             System.out.println("operacao de envio nao autorizada");
         }
     }
@@ -217,8 +221,16 @@ public class Chat extends javax.swing.JFrame {
     public void enviarArquivo(String porta) {
         int portaTCP = Integer.parseInt(porta);
         try {
+            String msg = "MSG **Iniciando Tranferencia ";
+            emissor.comunicar(campoIP.getText().trim(), 
+                        campoPorta.getText().trim(), msg, this);
+            
             TransmissorArquivo transmitirArquivo = new TransmissorArquivo(portaTCP);
             transmitirArquivo.iniciarTransferencia(caminho);
+            
+            msg = "MSG **Tranferencia concluida";
+            emissor.comunicar(campoIP.getText().trim(), 
+                        campoPorta.getText().trim(), msg, this);
         } catch (IOException ex) {
             Logger.getLogger(Janela.class.getName()).log(Level.SEVERE, null, ex);
         }

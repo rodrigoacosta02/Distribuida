@@ -53,10 +53,14 @@ public class Receptor extends Thread{
                         break;
                     case "FILE":
                         chat.imprimirMsg(msgPacote);
+                        //  ## pacote[3] nome do arquivo
+                        System.out.println("File - partesString[3] - " + partesString[3]);
                         chat.receberArquivo(pacote.getAddress(), partesString[3]);
                         break;
                     case "OK":
                         chat.imprimirMsg(msgPacote);
+                        //  ## pacote[3] porta TCP
+                        System.out.println("Ok - partesString[3] - " + partesString[3]);
                         chat.enviarArquivo(partesString[3].trim());
                         break;
                     default:

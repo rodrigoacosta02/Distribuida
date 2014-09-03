@@ -200,12 +200,11 @@ public class Chat extends javax.swing.JFrame {
 
                 JFileChooser abrir = new JFileChooser();
                 int retorno = abrir.showSaveDialog(null);
-                String caminho = new String();
                 if (retorno == JFileChooser.APPROVE_OPTION) {
                     caminho = abrir.getSelectedFile().getAbsolutePath();
                     System.out.println("caminho - " + caminho);
                 }
-//                caminho = caminho.concat(nomeArquivo);
+                caminho = caminho.concat(nomeArquivo);
                 receptorArquivo.receberArquivo(caminho);
 
         } else {
@@ -219,12 +218,13 @@ public class Chat extends javax.swing.JFrame {
     }
 
     public void enviarArquivo(String porta) {
-        int portaTCP = Integer.parseInt(porta);
+        int portaTCP = Integer.parseInt(porta.trim());
         try {
             String msg = "MSG **Iniciando Tranferencia \n\n";
             emissor.comunicar(campoIP.getText().trim(), 
                         campoPorta.getText().trim(), msg, this);
             imprimirMsg(msg);
+            
             TransmissorArquivo transmitirArquivo = new TransmissorArquivo(portaTCP);
             transmitirArquivo.iniciarTransferencia(caminho);
             

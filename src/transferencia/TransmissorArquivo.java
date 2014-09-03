@@ -25,7 +25,7 @@ public class TransmissorArquivo {
         public TransmissorArquivo(int porta) throws IOException{
                 saida = null;
                 arq = null;
-                sever = new ServerSocket(porta);
+                sever = new ServerSocket(porta,10);
         }
         
         /**
@@ -46,12 +46,13 @@ public class TransmissorArquivo {
                 saida = socket.getOutputStream();
                 System.out.println("enviando");
                
-                read = arq.read(buff);
-                while (read != -1) {
+                while ((read = arq.read(buff)) != -1) {
                     saida.write(buff, 0, read);
-                    read = arq.read(buff);
                     saida.flush();
                 }
+                sever.close();
+                saida.close();
+                arq.close();
                 System.out.println("fim da transferencia");
         }
 }

@@ -43,15 +43,16 @@ public class ReceptorArquivo {
 		saida = new FileOutputStream(path_name);
 		stream = socket.getInputStream();
 		byte receber[] = new byte[1024];
-		int read = stream.read(receber);
+		int read;
 		
                 System.out.println("iniciando recepcao");
-                while(read != -1){			
+                while((read = stream.read(receber)) != -1){			
 			saida.write(receber,0,read);			
 			saida.flush();
-			read = stream.read(receber);
-                        System.out.println(".");
 		}
+                socket.close();
+                saida.close();
+                stream.close();
 		System.out.println("fim da transferencia");
 	}
 	

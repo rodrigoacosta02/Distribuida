@@ -36,7 +36,9 @@ public class Receptor extends Thread{
             Logger.getLogger(Receptor.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+/**
+ * executa thread para que o servidor espere o pacote e o trate
+ */
     @Override
     public void run() {
 
@@ -49,8 +51,6 @@ public class Receptor extends Thread{
                 //[0] - TIPO ## [1] - nome do user de envio ## [2] mensagem eviada
                 switch (partesString[0]) {
                     case "MSG" : //recebe msg
-//                        String msg1 =  partesString[0] + ":"  +partesString[1] + ":" + "\n"
-//                                + partesString[2];
                         chat.imprimirMsg(msgPacote);
                         break;
                     case "FILE"://recebe solicitacao de envio de arquivo

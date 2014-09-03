@@ -204,7 +204,7 @@ public class Chat extends javax.swing.JFrame {
                     caminho = abrir.getSelectedFile().getAbsolutePath();
                     System.out.println("caminho - " + caminho);
                 }
-                caminho = caminho.concat(nomeArquivo);
+//                caminho = caminho.concat(nomeArquivo);
                 receptorArquivo.receberArquivo(caminho);
 
         } else {
@@ -223,13 +223,11 @@ public class Chat extends javax.swing.JFrame {
             String msg = "MSG **Iniciando Tranferencia \n\n";
             emissor.comunicar(campoIP.getText().trim(), 
                         campoPorta.getText().trim(), msg, this);
-            imprimirMsg(msg);
             
             TransmissorArquivo transmitirArquivo = new TransmissorArquivo(portaTCP);
             transmitirArquivo.iniciarTransferencia(caminho);
             
             msg = "MSG **Tranferencia concluida\n\n";
-            imprimirMsg(msg);
             emissor.comunicar(campoIP.getText().trim(), 
                         campoPorta.getText().trim(), msg, this);
         } catch (IOException ex) {

@@ -25,7 +25,9 @@ public class Receptor extends Thread{
         iniciarSocket();
         this.chat = chat;
     }
-    
+    /**
+     * inicia conexao
+     */
     private void iniciarSocket() {
         try {
             socket = new DatagramSocket(port);
@@ -46,24 +48,24 @@ public class Receptor extends Thread{
                 String partesString [] = msgPacote.split(" ");
                 //[0] - TIPO ## [1] - nome do user de envio ## [2] mensagem eviada
                 switch (partesString[0]) {
-                    case "MSG" : 
+                    case "MSG" : //recebe msg
 //                        String msg1 =  partesString[0] + ":"  +partesString[1] + ":" + "\n"
 //                                + partesString[2];
                         chat.imprimirMsg(msgPacote);
                         break;
-                    case "FILE":
+                    case "FILE"://recebe solicitacao de envio de arquivo
                         chat.imprimirMsg(msgPacote);
                         //  ## pacote[3] nome do arquivo
                         System.out.println("File - partesString[3] - " + partesString[3]);
                         chat.receberArquivo(pacote.getAddress(), partesString[3]);
                         break;
-                    case "OK":
+                    case "OK"://recebe aceitacao para envio de arquivo
                         chat.imprimirMsg(msgPacote);
                         //  ## pacote[3] porta TCP
                         System.out.println("Ok - partesString[3] - " + partesString[3]);
                         chat.enviarArquivo(partesString[3].trim());
                         break;
-                    default:
+                    default://finaliza conexao
                         socket.close();
                 }
 

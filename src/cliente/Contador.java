@@ -106,9 +106,9 @@ public class Contador {
          * removo participante pelo endereco IP
          * @param address 
          */
-        public void removerParticipante(InetAddress address){
+        public void removerParticipante(InetAddress address, int porta){
             for (Usuario us : participantes) {
-                if(us.getIp().equals(address.getHostAddress())){		
+                if(us.getIp().equals(address.getHostAddress()) && us.getPorta() == porta){		
                     participantes.remove(us);
                 }
             }

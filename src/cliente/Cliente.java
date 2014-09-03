@@ -77,13 +77,12 @@ public class Cliente{
                                     
                                     break;
                                 case "OFFLINE":
-                                    contador.removerParticipante(receivePacket.getAddress());
-                                    msg=  "\n" + nome+ ":" + receivePacket.getAddress() + ":"
-                                            + receivePacket.getPort() + "\n"; 
+                                    contador.removerParticipante(receivePacket.getAddress(), Integer.parseInt(pacote[2]));
+                                    msg=  "\n" + pacote[0] + pacote[1]+ " : " + receivePacket.getAddress() + " : "
+                                            + pacote[2] + "\n"; 
                                     imprimirJanelaCliente = false;
                                     janela.recebimentoPacotes(msg, imprimirJanelaCliente);
                                     janela.recebimentoPacotes(contador.imprimirParticipantes(), imprimirJanelaCliente);
-
                                     break;
                             }
 				contador.verificarTempo();
@@ -155,7 +154,7 @@ public class Cliente{
          */
         public void fechandoJanela() {
                 try {
-			String s =  "OFFLINE "+nome;
+			String s =  "OFFLINE "+nome + " " + portaDatagramSocket;
 			byte data[] = s.getBytes();
 			sendPacket = new DatagramPacket(data, data.length,
 					grupo, portaMulticast);

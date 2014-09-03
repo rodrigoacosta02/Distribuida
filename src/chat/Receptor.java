@@ -57,7 +57,7 @@ public class Receptor extends Thread{
                         chat.imprimirMsg(msgPacote);
                         //  ## pacote[3] nome do arquivo
                         System.out.println("File - partesString[3] - " + partesString[3]);
-                        chat.receberArquivo(pacote.getAddress(), partesString[3]);
+                        chat.receberArquivo(pacote.getAddress(), partesString[3], msgPacote);
                         break;
                     case "OK"://recebe aceitacao para envio de arquivo
                         chat.imprimirMsg(msgPacote);

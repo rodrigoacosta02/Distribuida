@@ -185,9 +185,8 @@ public class Chat extends javax.swing.JFrame {
      * @param nomeArquivo
      * @throws java.io.IOException
      */
-    public void receberArquivo(InetAddress address, String nomeArquivo) throws IOException {
-        String msg;
-        if (JOptionPane.showConfirmDialog(null, "voce deseja receber o arquivo?", "WARNING",
+    public void receberArquivo(InetAddress address, String nomeArquivo, String msg) throws IOException {
+        if (JOptionPane.showConfirmDialog(null, msg + "\nVoce deseja receber o arquivo?", "WARNING",
                 JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                 
                int portaTCP = new Random().nextInt(9000) + 50000;

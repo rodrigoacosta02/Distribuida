@@ -3,6 +3,9 @@ package gui;
 import cliente.Cliente;
 import chat.Emissor;
 import chat.Receptor;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
@@ -139,11 +142,25 @@ public class Janela extends javax.swing.JFrame {
      *
      * @param evt
      */
+    
     private void menuNovaConversaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuNovaConversaActionPerformed
-        Chat chat;
         try {
             chat = new Chat(emissor, cliente.getNome());
             chat.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            chat.addWindowListener(
+	           new WindowAdapter() {
+	              public void windowClosing( WindowEvent e )
+	              {
+                          try {
+                              emissor.comunicar("localhost",
+                                      String.valueOf(emissor.getPorta())
+                                      , "FECHAR" , chat);
+                          } catch (IOException ex) {
+                              Logger.getLogger(Janela.class.getName()).log(Level.SEVERE, null, ex);
+                          }
+	              }
+	           }
+	        );
             new Receptor(emissor.getPorta(), chat).start();
         } catch (Exception ex) {
             Logger.getLogger(Janela.class.getName()).log(Level.SEVERE, null, ex);
@@ -183,4 +200,5 @@ public class Janela extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
     private Cliente cliente;
     private Emissor emissor;
+    private Chat chat;
 }

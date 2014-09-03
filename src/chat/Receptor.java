@@ -1,6 +1,5 @@
 package chat;
 
-import cliente.Contador;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -12,7 +11,7 @@ import java.util.logging.Logger;
  * Socket Datagrama Receptor - recebe pacotes datagrama
  * @author
  */
-public class Receptor extends Thread {
+public class Receptor extends Thread{
 
     private final int port;
     private byte buffer[] = new byte[1024];
@@ -39,7 +38,7 @@ public class Receptor extends Thread {
     @Override
     public void run() {
 
-        while (true) {
+        while (!socket.isClosed()) {
             try {
                 socket.receive(pacote);
                 String msgPacote = new String(pacote.getData(), 0, pacote.getLength());
@@ -53,11 +52,15 @@ public class Receptor extends Thread {
                         chat.imprimirMsg(msgPacote);
                         break;
                     case "FILE":
+                        chat.imprimirMsg(msgPacote);
                         chat.receberArquivo(pacote.getAddress(), partesString[3]);
                         break;
                     case "OK":
+                        chat.imprimirMsg(msgPacote);
                         chat.enviarArquivo(partesString[3].trim());
                         break;
+                    default:
+                        socket.close();
                 }
 
             } catch (IOException e) {

@@ -184,7 +184,7 @@ public class Chat extends javax.swing.JFrame {
      * @param nomeArquivo
      */
     public void receberArquivo(InetAddress address, String nomeArquivo) {
-        if (JOptionPane.showConfirmDialog(null, "voce deseja reber o arquivo?", "WARNING",
+        if (JOptionPane.showConfirmDialog(null, "voce deseja receber o arquivo?", "WARNING",
                 JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
             try {
                 
@@ -209,6 +209,7 @@ public class Chat extends javax.swing.JFrame {
                 Logger.getLogger(Chat.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
+            imprimirMsg("\n\n**Tranferencia nao autorizada\n\n");
             System.out.println("operacao de envio nao autorizada");
         }
     }

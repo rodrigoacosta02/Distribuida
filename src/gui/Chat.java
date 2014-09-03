@@ -210,7 +210,7 @@ public class Chat extends javax.swing.JFrame {
 
         } else {
             imprimirMsg("\n\n**Tranferencia nao autorizada\n\n");
-            msg = "MSG **Tranferencia nao autorizada ";
+            msg = "MSG **Tranferencia nao autorizada \n\n";
             emissor.comunicar(campoIP.getText().trim(), 
                         campoPorta.getText().trim(), msg, this);
                 
@@ -221,14 +221,15 @@ public class Chat extends javax.swing.JFrame {
     public void enviarArquivo(String porta) {
         int portaTCP = Integer.parseInt(porta);
         try {
-            String msg = "MSG **Iniciando Tranferencia ";
+            String msg = "MSG **Iniciando Tranferencia \n\n";
             emissor.comunicar(campoIP.getText().trim(), 
                         campoPorta.getText().trim(), msg, this);
-            
+            imprimirMsg(msg);
             TransmissorArquivo transmitirArquivo = new TransmissorArquivo(portaTCP);
             transmitirArquivo.iniciarTransferencia(caminho);
             
-            msg = "MSG **Tranferencia concluida";
+            msg = "MSG **Tranferencia concluida\n\n";
+            imprimirMsg(msg);
             emissor.comunicar(campoIP.getText().trim(), 
                         campoPorta.getText().trim(), msg, this);
         } catch (IOException ex) {

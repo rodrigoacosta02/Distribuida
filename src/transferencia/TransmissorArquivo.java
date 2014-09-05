@@ -50,9 +50,9 @@ public class TransmissorArquivo {
                     saida.write(buff, 0, read);
                     saida.flush();
                 }
-                sever.close();
                 saida.close();
                 arq.close();
+                sever.close();
                 System.out.println("fim da transferencia");
         }
 }

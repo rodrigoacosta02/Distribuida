@@ -54,9 +54,9 @@ public class ReceptorArquivo {
 			saida.write(receber,0,qntidadeLida);			
 			saida.flush();
 		}
-                socket.close();
                 saida.close();
                 stream.close();
+                socket.close();
 		System.out.println("fim da transferencia");
 	}
 	
